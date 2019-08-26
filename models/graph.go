@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -18,10 +17,11 @@ func getNodeKey(a int, b int) string {
 }
 
 func getOrMakeNode(a int, b int, mazeRows []string, nodeMap map[string]Node) Node {
-	content := mazeRows[a][b]
+
 	key := getNodeKey(a, b)
 	cell, ok := nodeMap[key]
 	if !ok {
+		content := string(mazeRows[a][b])
 		cell :=  Node{
 			[]Edge{},
 			content,
@@ -47,16 +47,14 @@ func NewGraph(mazeTextInput string) Graph {
 
 	nodeMap := make(map[string]Node)
 	graph := Graph{}
+
 	// Process the text maze to produce a series of Nodes & Edges
 	for i := 0; i < len(mazeRows); i++ {
 		row := mazeRows[i]
 		for j := 0; j < len(row); j ++ {
 			node := getOrMakeNode(i, j, mazeRows, nodeMap)
-			fmt.Printf("node content: %v\n", node.Content)
-			if node.Content == 64 {
-				//fmt.Printf("node content: %v\n", node.Content)
+			if node.Content == "@" {
 				graph.Root = node
-				//fmt.Printf("node content: %v\n", graph.Root.Content)
 			}
 
 			if i-1 >= 0 && contentIsNode(mazeRows[i-1][j]) {
@@ -81,14 +79,10 @@ func NewGraph(mazeTextInput string) Graph {
 		}
 	}
 
-	//for _, node := range nodeMap {
-		//fmt.Printf("node content: %v\n", node.Content)
-	//}
-
 	return graph
 }
 
 func contentIsNode(u uint8) bool {
-	return u == 120
+	return u == 120 || u == 71 || u == 64
 }
 

@@ -22,9 +22,9 @@ func main() {
 
 	maze := string(mazeBytes)
 
+	fmt.Printf("\n\nmaze \n%v\n\n", maze)
 	graph := models.NewGraph(maze)
-
-	fmt.Println(graph.Root.Content)
+	fmt.Printf("graph root: %v", graph.Root.Content)
 }
 
 
