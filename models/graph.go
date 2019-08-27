@@ -1,51 +1,53 @@
 package models
 
 import (
+	"strconv"
 	"strings"
 )
 
 type Graph struct {
-	Root Node
+	Root *Node
 }
 
 func getNodeKey(a int, b int) string {
 	name := strings.Builder{}
-	name.WriteString(string(a))
+	name.WriteString(strconv.Itoa(a))
 	name.WriteString("-")
-	name.WriteString(string(b))
+	name.WriteString(strconv.Itoa(b))
 	return name.String()
 }
 
-func getOrMakeNode(a int, b int, mazeRows []string, nodeMap map[string]Node) Node {
-
+func getOrMakeNode(a int, b int, mazeRows []string, nodeMap map[string]*Node) *Node {
 	key := getNodeKey(a, b)
-	cell, ok := nodeMap[key]
+	_, ok := nodeMap[key]
 	if !ok {
 		content := string(mazeRows[a][b])
-		cell :=  Node{
-			[]Edge{},
+		node :=  Node{
+			[]*Edge{},
 			content,
+			false,
 		}
-		nodeMap[key] = cell
+		nodeMap[key] = &node
 	}
 
-	return cell
+	return nodeMap[key]
 }
 
-func createEdgeAndAppend(sourceNode Node, targetNode Node){
-	aboveEdge := Edge{
+func createEdgeAndAppend(sourceNode *Node, targetNode *Node){
+	edge := Edge{
 		1,
 		sourceNode,
 		targetNode,
 	}
-	sourceNode.Edges = append(sourceNode.Edges, aboveEdge)
+
+	sourceNode.Edges = append(sourceNode.Edges, &edge)
 }
 
 
 func NewGraph(mazeTextInput string) Graph {
 	mazeRows := strings.Split(mazeTextInput, "\n")
 
-	nodeMap := make(map[string]Node)
+	nodeMap := make(map[string]*Node)
 	graph := Graph{}
 
 	// Process the text maze to produce a series of Nodes & Edges
@@ -76,6 +78,7 @@ func NewGraph(mazeTextInput string) Graph {
 				right := getOrMakeNode(i, j+1, mazeRows, nodeMap)
 				createEdgeAndAppend(node, right)
 			}
+
 		}
 	}
 
@@ -85,4 +88,5 @@ func NewGraph(mazeTextInput string) Graph {
 func contentIsNode(u uint8) bool {
 	return u == 120 || u == 71 || u == 64
 }
+
 

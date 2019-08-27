@@ -1,7 +1,7 @@
 package models
 
 type Edge struct {
-	weight int
-	origin Node
-	destination Node
+	Weight int
+	Origin *Node
+	Destination *Node
 }

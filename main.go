@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"ohitsjoe.co/gogorithms/algorithms"
 	"ohitsjoe.co/gogorithms/models"
 	"os"
 )
@@ -24,7 +25,8 @@ func main() {
 
 	fmt.Printf("\n\nmaze \n%v\n\n", maze)
 	graph := models.NewGraph(maze)
-	fmt.Printf("graph root: %v", graph.Root.Content)
+
+	algorithms.DFSIterative(&graph)
 }
 
 

@@ -1,6 +1,7 @@
 package models
 
 type Node struct {
-	Edges   []Edge
+	Edges   []*Edge
 	Content string
+	Checked bool
 }
