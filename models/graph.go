@@ -1,12 +1,16 @@
 package models
 
 import (
+	"fmt"
+	"log"
 	"strconv"
 	"strings"
 )
 
 type Graph struct {
+	maze string
 	Root *Node
+	nodeMap map[string]*Node
 }
 
 func getNodeKey(a int, b int) string {
@@ -82,6 +86,8 @@ func NewGraph(mazeTextInput string) Graph {
 		}
 	}
 
+	graph.maze = mazeTextInput
+	graph.nodeMap = nodeMap
 	return graph
 }
 
@@ -89,4 +95,38 @@ func contentIsNode(u uint8) bool {
 	return u == 120 || u == 71 || u == 64
 }
 
+func (g Graph) PrintGraph() {
+	mazeRows := strings.Split(g.maze, "\n")
+	processedMaze := make([]string, len(mazeRows))
+
+	// Process the text maze to produce a series of Nodes & Edges
+	for i := 0; i < len(mazeRows); i++ {
+		row := mazeRows[i]
+		processedRow := strings.Builder{}
+
+		for j := 0; j < len(row); j ++ {
+			nodeKey := getNodeKey(i, j)
+			node, ok := g.nodeMap[nodeKey]
+			if ok {
+				if node.Content == "@" {
+					processedRow.WriteString("@")
+				} else if node.Content == "G" {
+					processedRow.WriteString("G")
+				} else {
+					if node.Checked {
+						processedRow.WriteString("o")
+					} else {
+						processedRow.WriteString("x")
+					}
+				}
+			} else {
+				log.Fatal("Graph not properly proocessed")
+			}
+		}
+
+		processedMaze = append(processedMaze, processedRow.String())
+	}
+
+	fmt.Printf("%v\n", strings.Join(processedMaze, "\n"))
+}
 

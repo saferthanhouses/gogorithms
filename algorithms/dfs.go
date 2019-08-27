@@ -37,5 +37,7 @@ func DFSIterative(graph *models.Graph){
 		//fmt.Printf("queue: %v\n", queue)
 		lastNode.Checked = true
 	}
+
+	graph.PrintGraph()
 }
 
