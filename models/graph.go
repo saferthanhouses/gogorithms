@@ -108,16 +108,10 @@ func (g Graph) PrintGraph() {
 			nodeKey := getNodeKey(i, j)
 			node, ok := g.nodeMap[nodeKey]
 			if ok {
-				if node.Content == "@" {
-					processedRow.WriteString("@")
-				} else if node.Content == "G" {
-					processedRow.WriteString("G")
+				if node.Checked {
+					processedRow.WriteString("o")
 				} else {
-					if node.Checked {
-						processedRow.WriteString("o")
-					} else {
-						processedRow.WriteString("x")
-					}
+					processedRow.WriteString(node.Content)
 				}
 			} else {
 				log.Fatal("Graph not properly proocessed")

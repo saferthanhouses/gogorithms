@@ -11,9 +11,9 @@ func DFSIterative(graph *models.Graph){
 		graph.Root,
 	}
 
-	var foundTheGoal bool = false
+	var foundTheGoal *models.Node
 
-	for foundTheGoal == false {
+	for len(queue) != 0 {
 		lastNode := queue[len(queue)-1]
 		queue = queue[:len(queue)-1]
 
@@ -22,8 +22,7 @@ func DFSIterative(graph *models.Graph){
 		}
 
 		if lastNode.Content == "G" {
-			fmt.Println("Found the goal")
-			foundTheGoal = true
+			foundTheGoal = lastNode
 			break
 		}
 
@@ -32,10 +31,14 @@ func DFSIterative(graph *models.Graph){
 			connectedNodes[i] = edge.Destination
 		}
 
-		//fmt.Printf("node.Edges %v\n", node.Edges)
 		queue = append(queue, connectedNodes...)
-		//fmt.Printf("queue: %v\n", queue)
 		lastNode.Checked = true
+	}
+
+	if foundTheGoal != nil {
+		fmt.Println("Found the goal :D")
+	} else {
+		fmt.Println("No route to the goal ... :(")
 	}
 
 	graph.PrintGraph()
