@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func DFSIterative(graph *models.Graph){
+func BFSIterative(graph *models.Graph){
 
 	queue := []*models.Node{
 		graph.Root,
@@ -15,25 +15,25 @@ func DFSIterative(graph *models.Graph){
 	var foundTheGoal *models.Node
 
 	for len(queue) != 0 {
-		lastNode := queue[len(queue)-1]
-		queue = queue[:len(queue)-1]
+		firstNode := queue[0]
+		queue = queue[1:]
 
-		if lastNode.Checked == true {
+		if firstNode.Checked == true {
 			continue
 		}
 
-		if lastNode.Content == "G" {
-			foundTheGoal = lastNode
+		if firstNode.Content == "G" {
+			foundTheGoal = firstNode
 			break
 		}
 
-		connectedNodes := make([]*models.Node, len(lastNode.Edges))
-		for i, edge := range lastNode.Edges {
+		connectedNodes := make([]*models.Node, len(firstNode.Edges))
+		for i, edge := range firstNode.Edges {
 			connectedNodes[i] = edge.Destination
 		}
 
 		queue = append(queue, connectedNodes...)
-		lastNode.Checked = true
+		firstNode.Checked = true
 
 		graph.PrintGraph()
 		time.Sleep(16 * time.Millisecond)
