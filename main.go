@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"io/ioutil"
 	"log"
 	"ohitsjoe.co/gogorithms/algorithms"
@@ -10,7 +9,7 @@ import (
 )
 
 func main() {
-	file, err := os.Open("./mazes/6.txt")
+	file, err := os.Open("./mazes/7.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -23,7 +22,6 @@ func main() {
 
 	maze := string(mazeBytes)
 
-	fmt.Printf("\n\nmaze \n%v\n\n", maze)
 	graph := models.NewGraph(maze)
 
 	algorithms.BFSIterative(&graph)

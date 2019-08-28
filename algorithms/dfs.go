@@ -36,7 +36,7 @@ func DFSIterative(graph *models.Graph){
 		lastNode.Checked = true
 
 		graph.PrintGraph()
-		time.Sleep(16 * time.Millisecond)
+		time.Sleep(4 * time.Millisecond)
 	}
 
 	if foundTheGoal != nil {
