@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	file, err := os.Open("./mazes/4.txt")
+	file, err := os.Open("./mazes/6.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -26,7 +26,7 @@ func main() {
 	fmt.Printf("\n\nmaze \n%v\n\n", maze)
 	graph := models.NewGraph(maze)
 
-	algorithms.DFSIterative(&graph)
+	algorithms.BFSIterative(&graph)
 }
 
 

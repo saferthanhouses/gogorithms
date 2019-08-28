@@ -2,6 +2,7 @@ package models
 
 import (
 	"fmt"
+	"github.com/inancgumus/screen"
 	"log"
 	"strconv"
 	"strings"
@@ -96,6 +97,8 @@ func contentIsNode(u uint8) bool {
 }
 
 func (g Graph) PrintGraph() {
+	screen.Clear()
+	screen.MoveTopLeft()
 	mazeRows := strings.Split(g.maze, "\n")
 	processedMaze := make([]string, len(mazeRows))
 
